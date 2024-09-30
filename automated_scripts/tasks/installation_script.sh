@@ -1,5 +1,29 @@
 #!/bin/bash
 
+# Description:
+# This script automates the installation of various development tools 
+# such as Docker, Terraform, MySQL Client, Redis, Ansible, AWS CLI, 
+# Python3, pip3, and boto3 on both Debian and RedHat-based systems. 
+# It checks if each package is installed and installs them if not. 
+# Additionally, it provides version verification for each installed package.
+# The script is designed to streamline the setup process for a development 
+# environment.
+
+# Usage:
+# Run this script as a user with sudo privileges.
+# To execute the script, navigate to its directory and run:
+# ./installation_script.sh
+
+# Ensure the script is executable:
+# chmod +x installation_script.sh
+
+# The script will:
+# - Detect the operating system type (Debian or RedHat)
+# - Update package lists and upgrade existing packages
+# - Install the specified tools if they are not already installed
+# - Verify the versions of installed tools
+# - Clean up unused packages at the end
+
 # Function to check and install a package based on OS
 install_if_not_exists() {
     PACKAGE_NAME=$1
