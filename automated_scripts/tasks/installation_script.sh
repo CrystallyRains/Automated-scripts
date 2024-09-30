@@ -1,13 +1,10 @@
 #!/bin/bash
 
 # Description:
-# This script automates the installation of various development tools 
-# such as Docker, Terraform, MySQL Client, Redis, Ansible, AWS CLI, 
-# Python3, pip3, and boto3 on both Debian and RedHat-based systems. 
-# It checks if each package is installed and installs them if not. 
-# Additionally, it provides version verification for each installed package.
-# The script is designed to streamline the setup process for a development 
-# environment.
+# This script automates the installation of various development tools such as Docker, Terraform, MySQL Client, Redis, Ansible,
+# AWS CLI,Python3, pip3, and boto3 on both Debian and RedHat-based systems.It checks if each package is installed and installs 
+# them if not.Additionally, it provides version verification for each installed package.The script is designed to streamline 
+# the setup process for a development environment.
 
 # Usage:
 # Run this script as a user with sudo privileges.
