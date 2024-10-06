@@ -1,6 +1,6 @@
 Jenkins Installation and Configuration Documentation
 
-##########################################################################################################################################
+###############################################################################################################
 Task 1: Install Jenkins using Docker
 
 Install Docker on your local machine if you haven't already.
@@ -10,7 +10,7 @@ Run the Jenkins container using the command: docker run -p 8080:8080 -p 50000:50
 Access Jenkins using a web browser at http://localhost:8080
 
 
-##########################################################################################################################################
+###############################################################################################################
 Task 2: Create a Sample Freestyle Job
 
 Log in to Jenkins using the default credentials (username: admin, password: admin)
@@ -21,7 +21,7 @@ Add a build step: "Execute shell" with the command echo "Hello DevOps"
 Click "Save"
 
 
-##########################################################################################################################################
+###############################################################################################################
 Task 3: Create a Jenkinsfile for the Sample Job
 
 The Jenkinsfile is already provided in the same folder.
@@ -33,7 +33,7 @@ Enter the GitHub repository URL, e.g., https://github.com/your-username/your-rep
 Enter the branch name, e.g., "main".
 Click "Save".
 
-##########################################################################################################################################
+###############################################################################################################
 Task 4: Configure Jenkins to Use the GitHub Repository
 
 Create a new GitHub repository for your project
