@@ -1,7 +1,11 @@
-stages {
-    stage('Hello DevOps') {
-        steps {
-            sh 'echo "Hello DevOps"'
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello DevOps') {
+            steps {
+                sh 'echo "Hello DevOps"'
+            }
         }
     }
 }
