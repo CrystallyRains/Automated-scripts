@@ -1,0 +1,108 @@
+Script started on 2024-10-19 13:17:35+05:30 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="150" LINES="35"]
+                    // Terminate EC2 instances
+                    sh "aws ec2 describe-instances --filters 'Name=instance-state-name,Values=running' --query 'Reservations[*].Instances[*].InstanceId' --output text | xargs -n 1 aws ec2 terminate-instances --instance-ids"
+                    echo "Terminated all running EC2 instances"
+
+                    // Delete Subnets
+                    sh "aws ec2 describe-subnets --query 'Subnets[*].SubnetId' --output text | xargs -n 1 aws ec2 delete-subnet --subnet-id"
+                    echo "Deleted all subnets"
+
+                    // Detach and delete Internet Gateway
+                    def vpcId = sh(script: 'aws ec2 describe-vpcs --query "Vpcs[0].VpcId" --output text', returnStdout: true).trim()
+                    def igwId = sh(script: "aws ec2 describe-internet-gateways --filters Name=attachment.vpc-id,Values=${vpcId} --query 'InternetGateways[0].InternetGatewayId' --output text", returnStdout: true).trim()
+                    sh "aws ec2 detach-internet-gateway --internet-gateway-id ${igwId} --vpc-id ${vpcId}"
+                    sh "aws ec2 delete-internet-gateway --internet-gateway-id ${igwId}"
+                    echo "Deleted Internet Gateway with ID: ${igwId}"
+
+                    // Delete VPC
+                    sh "aws ec2 delete-vpc --vpc-id ${vpcId}"
+                    echo "Deleted VPC with ID: ${vpcId}"
+                }
+            }
+        }
+    }
+}
+^[[201~[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     // Terminate EC2 instances
+[?2004lbash: //: Is a directory
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     sh "aws ec2 describe-instances --filters 'Name=instance-state-name,Values=running' --query 'Reservations[*].Instances[*].InstanceId' --output text | xargs -n 1 aws ec2 terminate-instances --instance-ids"
+[?2004lsh: 0: cannot open aws ec2 describe-instances --filters 'Name=instance-state-name,Values=running' --query 'Reservations[*].Instances[*].InstanceId' --output text | xargs -n 1 aws ec2 terminate-instances --instance-ids: No such file
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     echo "Terminated all running EC2 instances"
+[?2004lTerminated all running EC2 instances
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ 
+[?2004l[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     // Delete Subnets
+[?2004lbash: //: Is a directory
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     sh "aws ec2 describe-subnets --query 'Subnets[*].SubnetId' --output text | xargs -n 1 aws ec2 delete-subnet --subnet-id"
+[?2004lsh: 0: cannot open aws ec2 describe-subnets --query 'Subnets[*].SubnetId' --output text | xargs -n 1 aws ec2 delete-subnet --subnet-id: No such file
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     echo "Deleted all subnets"
+[?2004lDeleted all subnets
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ 
+[?2004l[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     // Detach and delete Internet Gateway
+[?2004lbash: //: Is a directory
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     def vpcId = sh(script: 'aws ec2 describe-vpcs --query "Vpcs[0].VpcId" --output text', returnStdout: true).trim()
+[?2004lbash: syntax error near unexpected token `('
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     def igwId = sh(script: "aws ec2 describe-internet-gateways --filters Name=attachment.vpc-id,Values=${vpcId} --query 'InternetGateways[0].InternetGatewayId' --output text", returnStdout: true).trim()
+[?2004lbash: syntax error near unexpected token `('
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     sh "aws ec2 detach-internet-gateway --internet-gateway-id ${igwId} --vpc-id ${vpcId}"
+[?2004lsh: 0: cannot open aws ec2 detach-internet-gateway --internet-gateway-id  --vpc-id : No such file
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     sh "aws ec2 delete-internet-gateway --internet-gateway-id ${igwId}"
+[?2004lsh: 0: cannot open aws ec2 delete-internet-gateway --internet-gateway-id : No such file
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     echo "Deleted Internet Gateway with ID: ${igwId}"
+[?2004lDeleted Internet Gateway with ID: 
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ 
+[?2004l[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     // Delete VPC
+[?2004lbash: //: Is a directory
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     sh "aws ec2 delete-vpc --vpc-id ${vpcId}"
+[?2004lsh: 0: cannot open aws ec2 delete-vpc --vpc-id : No such file
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                     echo "Deleted VPC with ID: ${vpcId}"
+[?2004lDeleted VPC with ID: 
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$                 }
+[?2004lbash: syntax error near unexpected token `}'
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$             }
+[?2004lbash: syntax error near unexpected token `}'
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$         }
+[?2004lbash: syntax error near unexpected token `}'
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$     }
+[?2004lbash: syntax error near unexpected token `}'
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ }
+[?2004lbash: syntax error near unexpected token `}'
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ ~clear
+[?2004lCommand '~clear' not found, did you mean:
+  command 'clear' from deb ncurses-bin (6.3-2ubuntu0.1)
+Try: sudo apt install <deb name>
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ git remote add -v ^[[200~https://github.com/CrystallyRains/Automated-scripts/tree/main/automated_scripts~[K[A]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ ~clear[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit remote add -v ^[[200~https://github.com/CrystallyRains/Automated-scripts/tree/main/automated_scripts[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Chttps://github.com/CrystallyRains/Automat[1Ped-scripts/tree/main/automated_scripts[A]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Chttps://github.com/CrystallyRains/Automate[1Pd-scripts/tree/main/automated_scripts[A]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Chttps://github.com/CrystallyRains/Automated[1P-scripts/tree/main/automated_scripts[A]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Chttps://github.com/CrystallyRains/Automated-[1Pscripts/tree/main/automated_scripts[A]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Chttps://github.com/CrystallyRains/Automated-s[1Pcripts/tree/main/automated_scripts[A]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Chttps://github.com/CrystallyRains/Automated-scr[2Pipts/tree/main/automated_scripts[A]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+[?2004lerror: unknown switch `v'
+usage: git remote add [<options>] <name> <url>
+
+    -f, --fetch           fetch the remote branches
+    --tags                import all tags and associated objects when fetching
+                          or do not fetch any tag at all (--no-tags)
+    -t, --track <branch>  branch(es) to track
+    -m, --master <branch>
+                          master branch
+    --mirror[=(push|fetch)]
+                          set up remote as a mirror to push to or fetch from
+
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ git remote add origin [7mhttps://github.com/CrystallyRains/Automate[27m[7md[27m[7m-scripts/tree/main/automated_scripts[27m[A]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Chttps://github.com/CrystallyRains/Automated-scripts/tree/main/automated_scripts[1P/automated_scripts[1P/automated_scripts[1P/automated_scripts[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P/automated_scripts[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1Pautomated_scripts[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P/automated_scripts[C[C[C[C[C[C[C[C[C[C[C[C[C[1P/automated_scripts[C[C[C[C[C[C[C[C[C[C[C[C[1P/automated_scripts[C[C[C[C[C[C[C[C[C[C[C[1P/automated_scripts[C[C[C[C[C[C[C[C[C[C[1Pautomated_scripts[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[?2004lerror: remote origin already exists.
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ git status
+[?2004lOn branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	[32mnew file:   ../../tasks/check.sh[m
+	[32mmodified:   ../../tasks/installation_script.sh[m
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	[31mmodified:   ../../tasks/installation_script.sh[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31m../[m
+
+[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts/task1[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_scripts/jenkins-scripts/task1[00m$ cd [K[K[Kgit add jen[K[K[K[K[K[K[K[K[K[K[Kcd ..
+[?2004l[?2004h]0;myub@snigdha-hp-notebook: ~/Automated-scripts/automated_scripts/jenkins-scripts[01;32mmyub@snigdha-hp-notebook[00m:[01;34m~/Automated-scripts/automated_sc
