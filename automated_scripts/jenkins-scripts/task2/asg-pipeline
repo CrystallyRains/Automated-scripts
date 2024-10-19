@@ -1,0 +1,82 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Create Launch Template for Public EC2') {
+            steps {
+                script {
+                    // Create a launch template for a public EC2 instance
+                    def publicTemplateName = "PublicEC2LaunchTemplate"
+                    def amiId = "ami-0abcdef1234567890" // Specify the AMI ID
+                    def securityGroupId = "sg-0123456789abcdef0" // Security group ID for public access
+                    def instanceType = "t3.micro" // Instance type for Free Tier
+                    
+                    // Create launch template using AWS CLI
+                    sh """
+                        aws ec2 create-launch-template \
+                        --launch-template-name ${publicTemplateName} \
+                        --launch-template-data '{
+                            "instanceType": "${instanceType}",
+                            "imageId": "${amiId}",
+                            "securityGroupIds": ["${securityGroupId}"]
+                        }'
+                    """
+                }
+            }
+        }
+        
+        stage('Create Launch Template for Private EC2') {
+            steps {
+                script {
+                    // Create a launch template for a private EC2 instance
+                    def privateTemplateName = "PrivateEC2LaunchTemplate"
+                    def privateSubnetId = "subnet-0123456789abcdef0" // Subnet ID for private network
+                    
+                    // Create launch template using AWS CLI
+                    sh """
+                        aws ec2 create-launch-template \
+                        --launch-template-name ${privateTemplateName} \
+                        --launch-template-data '{
+                            "instanceType": "${instanceType}",
+                            "imageId": "${amiId}",
+                            "securityGroupIds": ["${securityGroupId}"]
+                        }'
+                    """
+                }
+            }
+        }
+        
+        stage('Create Auto Scaling Group') {
+            steps {
+                script {
+                    // Create Auto Scaling Group for public EC2
+                    def publicASGName = "PublicEC2ASG"
+                    
+                    sh """
+                        aws autoscaling create-auto-scaling-group \
+                        --auto-scaling-group-name ${publicASGName} \
+                        --launch-template "LaunchTemplateName=PublicEC2LaunchTemplate" \
+                        --min-size 1 \
+                        --max-size 1 \
+                        --desired-capacity 1 \
+                        --vpc-zone-identifier "subnet-0123456789abcdef0" # Public subnet
+                    """
+                    
+                    // Create Auto Scaling Group for private EC2
+                    def privateASGName = "PrivateEC2ASG"
+                    
+                    sh """
+                        aws autoscaling create-auto-scaling-group \
+                        --auto-scaling-group-name ${privateASGName} \
+                        --launch-template "LaunchTemplateName=PrivateEC2LaunchTemplate" \
+                        --min-size 1 \
+                        --max-size 1 \
+                        --desired-capacity 1 \
+                        --vpc-zone-identifier "subnet-0123456789abcdef1" # Private subnet
+                    """
+                }
+            }
+        }
+    }
+}
+
