@@ -2,7 +2,7 @@
 
 # Description:
 # This script automates the installation of various development tools such as Docker, Docker Compose, Terraform, MySQL Client, Redis, Ansible,
-# AWS CLI, Python3, pip3, boto3, and Ruby. The script is compatible with both Debian and RedHat-based systems. 
+# AWS CLI, Python3, pip3, boto3, Ruby, and Go. The script is compatible with both Debian and RedHat-based systems. 
 # It checks if each package is installed, installs it if not, and verifies the installed versions.
 # The script installs specific versions of each tool by default, but allows the user to confirm, skip, or provide a custom version during execution.
 # The goal is to streamline the setup of a development environment with flexibility for user customization.
@@ -119,6 +119,7 @@ DEFAULT_ANSIBLE_VERSION="2.10.8"
 DEFAULT_AWS_CLI_VERSION="2.11.20"
 DEFAULT_RUBY_VERSION="2.7.5"
 DEFAULT_PYTHON_VERSION="3.9.10"
+DEFAULT_GO_VERSION="1.20.5"
 
 # Prompt the user and install each tool based on their confirmation and version input
 prompt_installation "Docker" $DEFAULT_DOCKER_VERSION "docker"
@@ -130,6 +131,7 @@ prompt_installation "Ansible" $DEFAULT_ANSIBLE_VERSION "ansible"
 prompt_installation "AWS CLI" $DEFAULT_AWS_CLI_VERSION "aws"
 prompt_installation "Ruby" $DEFAULT_RUBY_VERSION "ruby"
 prompt_installation "Python3" $DEFAULT_PYTHON_VERSION "python3"
+prompt_installation "Go" $DEFAULT_GO_VERSION "go"
 
 # Install pip3 and boto3
 if command -v pip3 &> /dev/null; then
@@ -154,6 +156,10 @@ if [[ "$OS_FAMILY" == "debian" ]]; then
 else
     sudo yum autoremove -y || exit 1
 fi
+
+# Notify the user to source .bashrc
+echo "Go has been installed successfully!"
+echo "Please run 'source ~/.bashrc' to update your environment variables."
 
 echo "All tools have been installed and verified successfully."
 
