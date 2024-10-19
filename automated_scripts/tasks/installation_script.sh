@@ -162,4 +162,3 @@ echo "Go has been installed successfully!"
 echo "Please run 'source ~/.bashrc' to update your environment variables."
 
 echo "All tools have been installed and verified successfully."
-
